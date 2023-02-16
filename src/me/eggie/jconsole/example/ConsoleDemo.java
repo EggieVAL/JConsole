@@ -6,6 +6,6 @@ public class ConsoleDemo
 {
 	public static void main(String[] args)
 	{
-		JConsole.load();
+		JConsole.load(false);
 	}
 }

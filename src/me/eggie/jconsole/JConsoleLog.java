@@ -1,5 +1,7 @@
 package me.eggie.jconsole;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Insets;
 
 import javax.swing.JTextArea;
@@ -12,10 +14,15 @@ public class JConsoleLog extends JTextArea
 		super();
 		this.console = console;
 		
+		final Color BACKGROUND = this.console.getInnerColor();
 		final Insets MARGIN = new Insets(8, 8, 8, 8);
+		final Font FONT = this.console.getFont();
+		final Color FONT_COLOR = this.console.getFontColor();
 		
+		this.setBackground(BACKGROUND);
 		this.setMargin(MARGIN);
-		this.setPreferredSize(this.console.getSize());
+		this.setFont(FONT);
+		this.setForeground(FONT_COLOR);
 		this.setLineWrap(true);
 	}
 	
