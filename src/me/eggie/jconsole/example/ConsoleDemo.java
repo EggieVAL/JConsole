@@ -1,9 +1,11 @@
 package me.eggie.jconsole.example;
 
+import me.eggie.jconsole.JConsole;
+
 public class ConsoleDemo
 {
 	public static void main(String[] args)
 	{
-		System.out.println("Hello");
+		JConsole.load();
 	}
 }

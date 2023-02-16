@@ -7,4 +7,5 @@
  */
 module JConsole
 {
+	requires java.desktop;
 }
