@@ -1,0 +1,10 @@
+/**
+ * 
+ */
+/**
+ * @author Eggie
+ *
+ */
+module JConsole
+{
+}
