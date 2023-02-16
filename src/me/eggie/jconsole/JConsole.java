@@ -1,7 +1,6 @@
 package me.eggie.jconsole;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
@@ -19,12 +18,22 @@ public class JConsole extends JFrame
 	{
 		super("Console");
 		
-		this.setPreferredSize(new Dimension(700, 500));
+		this.setSize(700, 500);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new BorderLayout());
+		
+		this.contentPane = new JConsolePanel(this);
+		this.log = new JConsoleLog(this);
+		this.scrollPane = new JConsoleScroll(this, this.log);
 		
 		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
+	
+	private JConsolePanel contentPane;
+	
+	private JConsoleLog log;
+	
+	private JConsoleScroll scrollPane;
 }
