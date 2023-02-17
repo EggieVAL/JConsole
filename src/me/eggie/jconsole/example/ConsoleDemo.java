@@ -6,6 +6,7 @@ public class ConsoleDemo
 {
 	public static void main(String[] args)
 	{
-		JConsole.load(false);
+		JConsole console = new JConsole(false);
+		console.setSpacing(1.5f);
 	}
 }
