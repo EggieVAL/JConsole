@@ -55,7 +55,7 @@ public class JConsole extends JFrame implements MouseListener, MouseMotionListen
 		
 		new JConsolePanel(this);
 		this.log = new JConsoleLog(this);
-		new JConsoleScroll(this, this.log);
+		this.scrollPane = new JConsoleScrollPane(this, this.log);
 		
 		this.log.add(new Clear(this, "clear"));
 		this.log.add(new Help(this, "help"));
@@ -163,6 +163,16 @@ public class JConsole extends JFrame implements MouseListener, MouseMotionListen
 		return this.user;
 	}
 	
+	public JConsoleLog getLog()
+	{
+		return this.log;
+	}
+	
+	public JConsoleScrollPane getScrollPane()
+	{
+		return this.scrollPane;
+	}
+	
 	public List<Command> getCommands()
 	{
 		return this.log.getCommands();
@@ -229,27 +239,17 @@ public class JConsole extends JFrame implements MouseListener, MouseMotionListen
 		this.log.setSpacing(spacing);
 	}
 	
+	public void setScrollBarWidth(int width)
+	{
+		this.scrollPane.setScrollBarWidth(width);
+	}
+	
 	public void lightMode(boolean lightMode)
 	{
 		this.outer = (lightMode) ? LIGHT_MODE_OUTER : DARK_MODE_OUTER;
 		this.inner = (lightMode) ? LIGHT_MODE_INNER : DARK_MODE_INNER;
 		this.fontColor = (lightMode) ? LIGHT_MODE_FONT_COLOR : DARK_MODE_FONT_COLOR;
 	}
-	
-	private Color outer;
-	private Color inner;
-	private Color fontColor;
-	
-	private Font font;
-	
-	private String entry;
-	private String tab;
-	private String user;
-	
-	private JConsoleLog log;
-	
-	private Set<Integer> buttonsPressed;
-	private Point prevPoint;
 	
 	@Override
 	public void mouseDragged(MouseEvent e)
@@ -291,4 +291,20 @@ public class JConsole extends JFrame implements MouseListener, MouseMotionListen
 	
 	@Override
 	public void mouseExited(MouseEvent e) { }
+	
+	private Color outer;
+	private Color inner;
+	private Color fontColor;
+	
+	private Font font;
+	
+	private String entry;
+	private String tab;
+	private String user;
+	
+	private JConsoleLog log;
+	private JConsoleScrollPane scrollPane;
+	
+	private Set<Integer> buttonsPressed;
+	private Point prevPoint;
 }

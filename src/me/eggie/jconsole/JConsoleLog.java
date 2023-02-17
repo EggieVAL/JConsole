@@ -208,7 +208,7 @@ public class JConsoleLog extends JTextArea implements KeyListener
 		this.keysPressed.remove(e.getKeyCode());
 	}
 	
-	protected void setContainer(JConsoleScroll container)
+	protected void setContainer(JConsoleScrollPane container)
 	{
 		this.container = container;
 	}
@@ -304,7 +304,7 @@ public class JConsoleLog extends JTextArea implements KeyListener
 	}
 	
 	private JConsole console;
-	private JConsoleScroll container;
+	private JConsoleScrollPane container;
 	private JLogDocument document;
 	
 	private float spacing;
