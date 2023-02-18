@@ -9,18 +9,92 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
+/**
+ * A customized scroll bar tailored for a {@code JConsoleScrollPane}.
+ * @author Eggie
+ */
 public class JConsoleScrollBar extends BasicScrollBarUI
 {
+	/**
+	 * Creates a rounded scroll bar for a {@code JConsoleScrollPane}.
+	 * @param color       the color of the scroll bar.
+	 * @param arcWidth    the arc of the scroll bar in terms of width.
+	 * @param arcHeight   the arc of the scroll bar in terms of height.
+	 */
 	public JConsoleScrollBar(Color color, int arcWidth, int arcHeight)
 	{
 		this.color = color;
-		this.arcWidth = arcWidth;
-		this.arcHeight = arcHeight;
+		this.arcWidth = (arcWidth >= 0) ? arcWidth : 0;
+		this.arcHeight = (arcHeight >= 0) ? arcHeight : 0;
 	}
 	
+	/**
+	 * Creates the defaulted rounded scroll bar for a {@code JConsoleScrollPane}.
+	 * @param color   the color of the scroll bar.
+	 */
 	public JConsoleScrollBar(Color color)
 	{
-		this(color, 20, 8);
+		this(color, 15, 6);
+	}
+	
+	/**
+	 * Get the color of the scroll bar.
+	 * @return a {@code Color}.
+	 */
+	public Color getColor()
+	{
+		return this.color;
+	}
+	
+	/**
+	 * Get the arc width of the scroll bar.
+	 * @return an integer.
+	 */
+	public int getArcWidth()
+	{
+		return this.arcWidth;
+	}
+	
+	/**
+	 * Get the arc height of the scroll bar.
+	 * @return an integer.
+	 */
+	public int getArcHeight()
+	{
+		return this.arcHeight;
+	}
+	
+	/**
+	 * Set the color of the scroll bar.
+	 * @param color   a {@code Color}.
+	 */
+	public void setColor(Color color)
+	{
+		this.color = color;
+	}
+	
+	/**
+	 * Set the arc width of the scroll bar.
+	 * @param arcWidth   an integer.
+	 */
+	public void setArcWidth(int arcWidth)
+	{
+		if (arcWidth >= 0)
+		{
+			this.arcWidth = arcWidth;
+		}
+	}
+	
+	/**
+	 * Set the arc height of the scroll bar.
+	 * @param arcHeight   an integer.
+	 */
+	public void setArcHeight(int arcHeight)
+	{
+		if (arcHeight >= 0)
+		{
+			this.arcHeight = arcHeight;
+		}
 	}
 	
 	@Override

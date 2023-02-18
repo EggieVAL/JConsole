@@ -11,11 +11,21 @@ import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.border.AbstractBorder;
 
+/**
+ * A {@code JRoundedBorder} is a rounded border.
+ * @author Eggie
+ */
 @SuppressWarnings("serial")
 public class JRoundedBorder extends AbstractBorder
 {
-	public JRoundedBorder(final Color c, final Insets thickness,
-			final float innerArc, final float outerArc)
+	/**
+	 * Creates a rounded border.
+	 * @param c           the color of the border.
+	 * @param thickness   the thickness of the border.
+	 * @param innerArc    the inner curve of the border.
+	 * @param outerArc    the outer curve of the border.
+	 */
+	public JRoundedBorder(Color c, Insets thickness, float innerArc, float outerArc)
 	{
 		this.color = c;
 		this.thickness = thickness;
@@ -24,9 +34,7 @@ public class JRoundedBorder extends AbstractBorder
 	}
 	
 	@Override
-	public void paintBorder(final Component c, final Graphics g,
-							final int x, final int y,
-							final int width, final int height)
+	public void paintBorder(Component c, Graphics g, int x, int y, int width, int height)
 	{
 		if (!(g instanceof Graphics2D))
 		{
@@ -35,21 +43,21 @@ public class JRoundedBorder extends AbstractBorder
 		
 		Graphics2D g2d = (Graphics2D) g;
 		
-		final Color oldColor = g2d.getColor();
+		Color oldColor = g2d.getColor();
 		g2d.setColor(this.color);
 		
-		final Shape outer;
-		final Shape inner;
+		Shape outer;
+		Shape inner;
 		
-		final int top = this.thickness.top;
-		final int left = this.thickness.left;
-		final int bot = this.thickness.bottom;
-		final int right = this.thickness.right;
+		int top = this.thickness.top;
+		int left = this.thickness.left;
+		int bot = this.thickness.bottom;
+		int right = this.thickness.right;
 		
-		final int west = x + left;
-		final int north = y + top;
-		final int east = width - left - right;
-		final int south = height - top - bot;
+		int west = x + left;
+		int north = y + top;
+		int east = width - left - right;
+		int south = height - top - bot;
 		
 		outer = new RoundRectangle2D.Float(x, y, width, height, this.outerArc, this.outerArc);
 		inner = new RoundRectangle2D.Float(west, north, east, south, this.innerArc, this.innerArc);

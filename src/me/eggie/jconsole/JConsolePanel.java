@@ -9,17 +9,30 @@ import java.awt.Rectangle;
 
 import javax.swing.JPanel;
 
+/**
+ * A {@code JConsolePanel} is a content pane for a {@code JConsole}. This is a container
+ * for a {@code JConsoleScrollPane} and a {@code JConsoleLog}.
+ * @author Eggie
+ */
 @SuppressWarnings("serial")
 public class JConsolePanel extends JPanel
 {
+	/**
+	 * Creates a content pane for a {@code JConsole}.
+	 * @param console   the container of this {@code JConsolePanel}
+	 */
 	public JConsolePanel(JConsole console)
 	{
 		super();
 		this.renderTarget = null;
 		this.console = console;
 		this.console.setContentPane(this);
-		
-		final Color COLOR = this.console.getOuterColor();
+		this.changeDefaultLook(this.console.getOuterColor());
+	}
+	
+	public void changeDefaultLook(Color outer)
+	{
+		final Color COLOR = outer;
 		final Insets THICKNESS = new Insets(28, 16, 16, 16);
 		final float INNER_ARC = 15f;
 		final float OUTER_ARC = 30f;
@@ -28,6 +41,12 @@ public class JConsolePanel extends JPanel
 		this.setBorder(border);
 	}
 	
+	/**
+	 * Changes how a {@code JConsolePanel} is painted onto the screen:
+	 * The render target is slightly smaller than the panel's actual
+	 * size to make sure the background doesn't protrude out of the
+	 * {@code JRoundedBorder}.
+	 */
 	@Override
 	protected void paintComponent(Graphics g)
 	{

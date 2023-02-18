@@ -18,43 +18,51 @@ import me.eggie.jconsole.ui.InvalidLineTypeException;
 import me.eggie.jconsole.ui.JLine;
 import me.eggie.jconsole.ui.JLogDocument;
 
+/**
+ * A {@code JConsoleLog} stores every printed message a {@code JConsole} receives.
+ * There is a maximum buffer for the log, and therefore once reached, the
+ * {@code JConsoleLog} will start deleting messages.
+ * @author Eggie
+ */
 @SuppressWarnings("serial")
 public class JConsoleLog extends JTextArea implements KeyListener
 {
+	/**
+	 * The minimum spacing between lines.
+	 */
 	public static final float MIN_SPACING = 1.25f;
 	
+	/**
+	 * Creates a {@code JConsoleLog} for a {@code JConsole}.
+	 * @param console   the container of this {@code JConsoleLog}.
+	 */
 	public JConsoleLog(JConsole console)
 	{
 		super();
 		this.console = console;
 		this.container = null;
 		this.document = new JLogDocument();
-		this.spacing = JConsoleLog.MIN_SPACING;
+		this.spacing = 1.5f;
 		this.keysPressed = new HashSet<Integer>();
 		this.commands = new ArrayList<Command>();
-		
-		final Color BACKGROUND = this.console.getInnerColor();
-		final Insets MARGIN = new Insets(8, 8, 8, 8);
-		final Font FONT = this.console.getFont();
-		final Color FONT_COLOR = this.console.getFontColor();
-		
-		String entry = this.console.getEntry();
-		String user = this.console.getUser();
-		String text = user + entry;
-		
-		this.savedDocument = text;
+		this.savedDocument = this.console.getUser() + this.console.getEntry();
 		this.inputStartPos = this.savedDocument.length();
 		
-		this.setBackground(BACKGROUND);
-		this.setMargin(MARGIN);
-		this.setFont(FONT);
-		this.setForeground(FONT_COLOR);
+		this.changeDefaultLook(this.console.getInnerColor(),
+							   this.console.getFontColor(),
+							   this.console.getFont());
+		
+		this.setMargin(new Insets(8, 8, 8, 8));
 		this.setLineWrap(true);
-		this.setText(text);
+		this.setText(this.savedDocument);
 		this.setCaretPosition(this.inputStartPos);
 		this.addKeyListener(this);
 	}
 	
+	/**
+	 * Adds the line to the log.
+	 * @param line   a {@code JLine}.
+	 */
 	public void add(JLine line)
 	{
 		String entry = this.console.getEntry();
@@ -86,6 +94,12 @@ public class JConsoleLog extends JTextArea implements KeyListener
 		this.setText(text);
 	}
 	
+	/**
+	 * Adds the line to the log.
+	 * @param id                          the ID of each line.
+	 * @param multiLineText               a multi-line text.
+	 * @throws InvalidLineTypeException   an invalid {@code JLine}.
+	 */
 	public void add(int id, String multiLineText) throws InvalidLineTypeException
 	{
 		int begin = 0;
@@ -108,6 +122,11 @@ public class JConsoleLog extends JTextArea implements KeyListener
 		}
 	}
 	
+	/**
+	 * Adds/registers a {@code Command} to this console.
+	 * @param cmd   a {@code Command}.
+	 * @return if the command was successfully added.
+	 */
 	public boolean add(Command cmd)
 	{
 		if (cmd == null)
@@ -126,6 +145,23 @@ public class JConsoleLog extends JTextArea implements KeyListener
 		return this.commands.add(cmd);
 	}
 	
+	/**
+	 * Changes the default look of a {@code JConsoleLog}.
+	 * @param inner       the inner layer color.
+	 * @param fontColor   the font color.
+	 * @param font        the font.
+	 */
+	public void changeDefaultLook(Color inner, Color fontColor, Font font)
+	{
+		this.setBackground(inner);
+		this.setForeground(fontColor);
+		this.setFont(font);
+	}
+	
+	/**
+	 * Clears the log of all its messages, as well as clearing
+	 * the document history.
+	 */
 	public void clear()
 	{
 		String entry = this.console.getEntry();
@@ -139,6 +175,10 @@ public class JConsoleLog extends JTextArea implements KeyListener
 		this.setText(text);
 	}
 	
+	/**
+	 * Get all the commands registered in this console.
+	 * @return a {@code List<Command>}.
+	 */
 	public List<Command> getCommands()
 	{
 		return Utilities.copyOf(commands);
@@ -157,11 +197,19 @@ public class JConsoleLog extends JTextArea implements KeyListener
 		};
 	}
 	
+	/**
+	 * Get the spacing between the lines.
+	 * @return a {@code float}.
+	 */
 	public float getSpacing()
 	{
 		return this.spacing;
 	}
 	
+	/**
+	 * Set the spacing between the lines.
+	 * @param spacing   a {@code float}.
+	 */
 	public void setSpacing(float spacing)
 	{
 		this.spacing = (spacing < JConsoleLog.MIN_SPACING) ?
@@ -206,11 +254,6 @@ public class JConsoleLog extends JTextArea implements KeyListener
 	public void keyReleased(KeyEvent e)
 	{
 		this.keysPressed.remove(e.getKeyCode());
-	}
-	
-	protected void setContainer(JConsoleScrollPane container)
-	{
-		this.container = container;
 	}
 	
 	private String convertLineToString(JLine line)
@@ -304,7 +347,7 @@ public class JConsoleLog extends JTextArea implements KeyListener
 	}
 	
 	private JConsole console;
-	private JConsoleScrollPane container;
+	protected JConsoleScrollPane container;
 	private JLogDocument document;
 	
 	private float spacing;

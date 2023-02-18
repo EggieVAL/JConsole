@@ -37,7 +37,7 @@ public abstract class Command
 		return (str == null) ? false : true;
 	}
 	
-	public String next(String cmd, final String remove)
+	public String next(String cmd, String remove)
 	{
 		cmd = cmd.strip();
 		if (cmd.startsWith(remove))
